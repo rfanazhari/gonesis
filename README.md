@@ -143,4 +143,4 @@ Issues and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for
 
 ## License
 
-Released under the [MIT License](LICENSE).
+Released under the [MIT License](LICENSE.md).

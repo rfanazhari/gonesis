@@ -35,4 +35,4 @@ Open an issue with the request you gave the agent, the `requirement.txt` (secret
 
 ## License
 
-By contributing, you agree that your contributions are licensed under the [MIT License](LICENSE).
+By contributing, you agree that your contributions are licensed under the [MIT License](LICENSE.md).
