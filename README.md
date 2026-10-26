@@ -1,3 +1,5 @@
+<p align="center"> <picture> <source media="(prefers-color-scheme: dark)" srcset="docs/assets/banner-dark.png"> <source media="(prefers-color-scheme: light)" srcset="docs/assets/banner-light.png"> <img alt="gonesis: Go service boilerplate, built by your agent" src="assets/gonesis-hero-banner.png" width="100%"> </picture> </p>
+
 # Gonesis
 
 An agent skill that builds a **Go service boilerplate** from your requirements: four Clean Architecture layers at the service root, one fully tested **Task Tracking** reference feature, structured logging, localized (EN/ID) errors, and verification evidence you can check.
