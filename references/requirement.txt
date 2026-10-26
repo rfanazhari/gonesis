@@ -1,0 +1,80 @@
+GO SERVICE BOILERPLATE REQUIREMENTS
+
+Instructions:
+- Replace each <answer> with your selected requirement.
+- Lines starting with # contain illustrative answers, not workflow defaults.
+- Write "none" or "not applicable" explicitly when appropriate.
+- Leave an undecided choice as "unresolved"; the agent must clarify it before dependent implementation.
+- Do not include passwords, tokens, or other secret values.
+
+[Service]
+Name: <answer>
+# Example: taskdemo
+Purpose: <answer>
+# Example: A standalone Go service demonstrating the Task Tracking reference feature.
+Target directory and status: <answer>
+# Example: services/taskdemo, new service in the target repository.
+Module path: <answer>
+# Example: example.com/taskdemo
+Runtime: <answer>
+# Example: HTTP API; no authentication or per-user ownership.
+Optional constraints and requested Git actions: <answer>
+# Example: Follow the target's Go toolchain; no commit or MR requested; no extra integrations.
+
+[1. Persistence]
+Storage and driver, if applicable: <answer>
+# Example: Concurrency-safe in-memory storage; no database driver.
+Retention and restart behavior: <answer>
+# Example: Data lasts for this process only and is lost on restart.
+Consistency and failure expectations: <answer>
+# Example: Task mutations are atomic; a rejected operation leaves stored state unchanged.
+Database/schema resources, if applicable: <answer>
+# Example: Not applicable; no database or migration files.
+
+[2. Internal events]
+Dispatch mechanism: <answer>
+# Example: Bounded in-process queue with one event consumer; no external broker.
+Event fields and publication point: <answer>
+# Example: TaskCompleted contains taskId and completedAt; acceptance into the queue is publication.
+Save/publication failure behavior: <answer>
+# Example: Commit state and enqueue atomically; a full queue rejects completion without changing the task.
+Delivery, retries, and shutdown: <answer>
+# Example: Log consumer failures, no automatic retries; drain accepted events during bounded shutdown.
+Durability guarantees: <answer>
+# Example: Process-local only; no crash recovery or exactly-once delivery guarantee.
+
+[3. Time semantics]
+Timezone, representation, and precision: <answer>
+# Example: UTC instants, RFC3339 JSON timestamps, millisecond precision.
+Due-date validation and overdue boundaries: <answer>
+# Example: dueDate equal to now is allowed; overdue only when now is strictly after dueDate and state is not Done.
+Rescheduling and clearing a due date: <answer>
+# Example: A non-Done task can change or clear its due date; null clears it.
+Timestamp ownership and test clock: <answer>
+# Example: The system sets createdAt/completedAt; domain/application tests use controllable time.
+
+[4. API contract]
+Transport and operations/routes: <answer>
+# Example: HTTP JSON; POST /tasks, POST /tasks/{id}/start, POST /tasks/{id}/complete, PATCH /tasks/{id}/due-date, GET /tasks/{id}.
+Identifier and state representation: <answer>
+# Example: Server-generated UUID string; todo, in_progress, done.
+Request and response fields: <answer>
+# Example: Create accepts title and optional dueDate; task details contain id, title, status, dueDate, overdue, createdAt, completedAt.
+Input boundaries and validation: <answer>
+# Example: Trim title whitespace; count Unicode code points after trimming; accept 1-100; reject client-supplied system timestamps.
+Success statuses and health: <answer>
+# Example: Create 201; other operations 200; GET /health 200 without authentication; every response uses the standard envelope.
+Error statuses and response data: <answer>
+# Example: Invalid input 400, missing task 404, invalid transition/final task 409, queue unavailable/full 503, unexpected technical error 500; data is {} on errors.
+
+[5. Verification]
+Required business/API checks: <answer>
+# Example: TDD for BR-01-BR-09; demonstrate create-start-complete-view, reschedule, overdue, and rejected transitions through the API.
+HTTP smoke and lifecycle expectations: <answer>
+# Example: Start actual wiring through go test, call /health over a local listener, validate the envelope, then verify shutdown.
+Architecture constraints: <answer>
+# Example: Four root layers; domain independent of HTTP/database/broker; repeatable dependency checks plus domain behavior tests.
+Available local resources and execution limits: <answer>
+# Example: Loopback networking is available; no database, broker, or Docker dependency; total shutdown budget is 5 seconds.
+Verification evidence expected: <answer>
+# Example: Record commands/results, RED/GREEN evidence, rule-to-test mapping, API/smoke results, and limitations; agent supplies exact commands.
