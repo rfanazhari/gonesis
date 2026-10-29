@@ -48,7 +48,7 @@ Use [workflow.md](references/workflow.md) for stage dependencies, outputs, and c
 
 | Before this activity | Read and apply |
 | --- | --- |
-| Creating modules/packages or changing Go implementation | [service-layout.md](references/service-layout.md), [go-standards.md](references/go-standards.md) |
+| Creating modules/packages or changing Go implementation | [backend-service-standard.md](references/backend-service-standard.md), [service-layout.md](references/service-layout.md), [go-standards.md](references/go-standards.md) |
 | Designing/implementing the mandatory business example | [example-task.md](references/example-task.md) |
 | Selecting dependencies, configuring logging, or integrating library APIs | [libraries.md](references/libraries.md) |
 | Defining API contracts, errors, localization, health, or handlers | [api-errors.md](references/api-errors.md) |
@@ -56,6 +56,8 @@ Use [workflow.md](references/workflow.md) for stage dependencies, outputs, and c
 | Implementing storage or internal completion events; adding SQL/migrations if selected | [persistence-events.md](references/persistence-events.md) |
 | Writing business/API docs, configuring a worktree, or performing requested Git actions | [git-documentation.md](references/git-documentation.md) |
 | Running final checks or handing off the service | [verification.md](references/verification.md) |
+
+Use the backend service standard as the baseline. The specific layout, Go, and testing references refine it as described in its Directory scope and design discretion section; explicit user and target project instructions take precedence. For unspecified structure, follow suitable repository conventions, then choose the simplest design meeting the requirements and record material reasons. Classify domain concepts independently of their package location and ownership.
 
 Set contracts before handlers and verify selected dependency APIs before integration. Source snapshots in the references are evidence about those versions, not universal pins or runtime proof.
 
