@@ -50,11 +50,12 @@ Use [workflow.md](references/workflow.md) for stage dependencies, outputs, and c
 | --- | --- |
 | Creating modules/packages or changing Go implementation | [backend-service-standard.md](references/backend-service-standard.md), [service-layout.md](references/service-layout.md), [go-standards.md](references/go-standards.md) |
 | Designing/implementing the mandatory business example | [example-task.md](references/example-task.md) |
+| Confirming implementation design, assessing after GREEN, or selecting refactors | [design-assessment.md](references/design-assessment.md) |
 | Selecting dependencies, configuring logging, or integrating library APIs | [libraries.md](references/libraries.md) |
 | Defining API contracts, errors, localization, health, or handlers | [api-errors.md](references/api-errors.md) |
 | Writing/editing tests, fixtures, mocks, or architecture checks | [testing.md](references/testing.md) |
-| Implementing storage or internal completion events; adding SQL/migrations if selected | [persistence-events.md](references/persistence-events.md) |
-| Writing business/API docs, configuring a worktree, or performing requested Git actions | [git-documentation.md](references/git-documentation.md) |
+| Selecting, designing, or implementing storage or internal completion events; adding SQL/migrations if selected | [persistence-events.md](references/persistence-events.md) |
+| Writing business/API/feature-design docs, configuring a worktree, or performing requested Git actions | [git-documentation.md](references/git-documentation.md) |
 | Running final checks or handing off the service | [verification.md](references/verification.md) |
 
 Use the backend service standard as the baseline. The specific layout, Go, and testing references refine it as described in its Directory scope and design discretion section; explicit user and target project instructions take precedence. For unspecified structure, follow suitable repository conventions, then choose the simplest design meeting the requirements and record material reasons. Classify domain concepts independently of their package location and ownership.
@@ -62,6 +63,8 @@ Use the backend service standard as the baseline. The specific layout, Go, and t
 Set contracts before handlers and verify selected dependency APIs before integration. Source snapshots in the references are evidence about those versions, not universal pins or runtime proof.
 
 Implement the example through TDD: demonstrate RED for missing public behavior, implement the minimum behavior, reach GREEN, then refactor. Preserve rule-to-test evidence for BR-01–BR-09 and all acceptance scenarios. Use controllable time and real runtime adapters; generated test mocks do not replace them.
+
+Confirm responsibility/invariant ownership before dependent tests/code and assess the actual design after GREEN under [design-assessment.md](references/design-assessment.md). Verify selected refinements through the appropriate [test path](references/testing.md#assessment-selected-work); assessment does not require changing an adequate design.
 
 Keep invariants in the domain, orchestration in application, transport translation in delivery, and external adapters in infrastructure. Wire the actual example and lifecycle in the composition root. Match persistence/event failure behavior to the validated requirements.
 
@@ -81,6 +84,7 @@ Return a concise handoff containing:
 
 - Service/worktree location and branch, relevant changed artifacts, and accepted input choices.
 - Enabled components, API/business documentation, and significant design/library decisions.
+- Link to the owning feature document with tactical/technical design, ticket references, assessment findings/dispositions, and verified refinements or a justified no-change result.
 - Rule/scenario evidence, exact commands and results, architecture checks, example API results, and HTTP smoke results when applicable.
 - Failed, blocked/not-run, or not-applicable checks and remaining limitations, clearly distinguished from passing checks.
 

@@ -24,7 +24,8 @@ Start with [SKILL.md](../SKILL.md); use [workflow.md](workflow.md) for detailed 
 | [service-layout.md](service-layout.md) | Before creating directories or wiring | Complete scoped layout, package responsibilities, standalone/workspace handling. |
 | [api-errors.md](api-errors.md) | Before writing transport contracts or handlers | Contract-first workflow, JSON envelope, HTTP errors, localization, health. |
 | [testing.md](testing.md) | Before writing/editing tests or configuring tools | TDD, table-driven tests, factories, Mockery, coverage, architecture checks. |
-| [example-task.md](example-task.md) | When planning or implementing the required example | All nine rules, capabilities, acceptance scenarios, exclusions. |
+| [example-task.md](example-task.md) | When planning or implementing the required example | Nine rules, acceptance scenarios, ticket traceability, tactical/technical design and exclusions. |
+| [design-assessment.md](design-assessment.md) | Before dependent implementation and after GREEN | Invariant ownership, refinement authority, justified refactoring and completion evidence. |
 | [persistence-events.md](persistence-events.md) | When selecting storage or implementing completion events | Persistence decisions, SQL/migrations, event semantics and boundaries. |
 | [libraries.md](libraries.md) | When selecting or integrating a library | Required/preferred libraries, version verification, known API gaps. |
 | [verification.md](verification.md) | Before accepting or handing off results | Commands, API demonstration, smoke, failure handling, completion report. |

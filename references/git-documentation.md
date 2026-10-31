@@ -40,6 +40,17 @@ Document API contracts before handler implementation. Keep specification, endpoi
 
 Keep technical material such as payloads, SQL schema, and Go signatures out of business-rule prose. Store it in the API/schema/design documentation appropriate to the target.
 
+## Feature design documentation
+
+Maintain one owning design document per feature, reusing the target's established location. If none exists, use service-local `docs/design/<feature>.md`, such as `docs/design/task-tracking.md`. Keep these sections together:
+
+- Requirement/business-rule references and the actual ticket reference, or an explicit unassigned status under [example-task.md](example-task.md#work-item-and-design-references).
+- Tactical design: concepts, classifications, ownership, invariants and lifecycle.
+- Technical design: concrete packages, operation flows, ports, runtime contracts, adapter decisions and verification plan.
+- Design assessment: ticket-linked findings/dispositions, significant refinements and links to commands/results or test evidence.
+
+Write the initial design before dependent implementation and update assessment after GREEN under [design-assessment.md](design-assessment.md). Link authoritative API/business documents rather than copying them. Later changes update affected design sections and add assessment evidence for their ticket while preserving relevant decision history. A small change can use a brief entry in the same document; separate files per use case, ticket or test cycle are unnecessary.
+
 ## Business documentation layout and identifiers
 
 When the target has no established business-documentation location, use this structure under its agreed documentation root:

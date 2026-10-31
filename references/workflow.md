@@ -2,7 +2,7 @@
 
 Use the agreed scope, labels, and inputs in [README.md](README.md). The result includes the Task reference feature and evidence that it works.
 
-Order: needs → isolated workspace → module/layout → foundations/contracts → TDD implementation/wiring → tooling/docs → verification/handoff.
+Order: needs → isolated workspace → module/layout → foundations/contracts and design confirmation → TDD implementation/wiring and design assessment → tooling/docs → verification/handoff.
 
 Set the dependency version before using its API, the API contract before writing its handler, and the test scenarios before implementing their behavior. A later discovery that changes a contract or dependency returns work to the affected stage.
 
@@ -56,11 +56,12 @@ Dependency: stage 3 and verified APIs for selected dependencies.
 - **Required:** initialize JSON logging with the service identity, masking, context propagation, and startup failure reporting.
 - **Required:** define service error codes, EN/ID translations, and safe transport mapping using [api-errors.md](api-errors.md).
 - **Required:** establish the example API contract, repository/event ports, controllable time source, and business-rule documentation before their implementations.
+- **Required:** confirm domain concepts, invariant/lifecycle ownership, consistency boundaries and preserved contracts using [design-assessment.md](design-assessment.md#before-implementation-confirm-the-design) and the example's design guidance before dependent tests/code.
 - **Conditional HTTP:** establish GET `/health`, its standard envelope, lack of auth, and its limited readiness meaning.
 - **Conditional:** define database connections, migrations, outbound clients, or broker configuration only for enabled requirements.
 - **Required:** define startup cancellation, partial-startup cleanup, and shutdown for owned resources.
 
-Output: contracts, foundation configuration, error catalog/localization, adapter decisions, and lifecycle plan.
+Output: contracts, foundation configuration, error catalog/localization, adapter decisions, lifecycle plan, and an owning feature design document with tactical/technical sections and ticket/rule references.
 
 Complete when wiring needs no hidden business/configuration decisions and selected library APIs have versioned evidence.
 
@@ -72,13 +73,14 @@ Dependency: stage 4 contracts and the stage 1 test plan. Apply [example-task.md]
 - **Required:** enforce title/date validity, lifecycle transitions, Done finality, overdue behavior, and system timestamps in the domain responsibilities. Application code orchestrates persistence and completion-event publication.
 - **Required:** connect config → logging/i18n → resources → adapters → application → API/runtime in the composition root.
 - **Required:** verify successful behavior, rejected rules, missing records, adapter failure, and the completion event through public interfaces.
+- **Required:** assess actual code/callers after GREEN under [design-assessment.md](design-assessment.md); justify findings, execute selected changes through [testing.md](testing.md#assessment-selected-work), and reassess the final feature diff.
 - **Required:** log startup failures, close resources already opened, and implement bounded shutdown.
 - **Conditional HTTP:** register health without auth; add only applicable middleware/CORS; adapt framework-generated responses to the agreed envelope.
 - **Recommended:** keep `main` thin and make the real composition root reusable by a smoke harness.
 
 Output: working reference feature, domain/application unit tests, RED/GREEN evidence, real adapters, runtime wiring, and cleanup.
 
-Complete when every reference rule/scenario passes and the API invokes the real application behavior.
+Complete when every reference rule/scenario passes, the API invokes the real application behavior, and assessment findings have justified dispositions with selected changes verified. A deferred finding that blocks acceptance leaves dependent work incomplete.
 
 ## 6. Complete tooling and documentation
 
@@ -90,6 +92,7 @@ Dependency: the actual packages and wiring from stages 3–5.
 - **Required:** provide repeatable dependency-direction checks and domain behavior evidence; document their commands.
 - **Conditional:** configure Sonar if the target uses it; keep coverage focused on domain/application.
 - **Required:** document environment setup, the example flow, verification commands, enabled components, and limitations using [git-documentation.md](git-documentation.md).
+- **Required:** keep the feature's tactical/technical design and ticket-linked assessment together in its owning design document; synchronize affected sections with the implemented result and link verification evidence.
 
 Output: working tooling, relevant generated artifacts, API/business documentation, and local usage instructions.
 

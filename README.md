@@ -14,6 +14,7 @@ When the skill runs to completion, the generated service has:
 - **A working reference feature**: Task Tracking (`Todo → In Progress → Done`) covering rules BR-01 to BR-09, built test-first with RED/GREEN evidence.
 - **Foundations**: environment-based configuration with a secret-free `.env.example`, JSON logging with masking, typed errors, EN/ID translations, and a standard JSON response envelope.
 - **Contracts before handlers**: API documentation under `docs/api/`, plus business-rule documentation.
+- **Design assessment**: one owning feature document with tactical/technical design, ticket references, review after GREEN, and justified refactoring with regression evidence.
 - **Tooling**: all-package `go test`, lint, vulnerability check, repeatable architecture (dependency-direction) checks, and Mockery-generated mocks where tests need them.
 - **Runtime proof**: a local `/health` smoke test through the real composition root, bounded shutdown, and a demonstrated create → start → complete → view API flow.
 
@@ -116,6 +117,7 @@ gonesis/
 │   ├── service-layout.md       # directory tree and composition root
 │   ├── go-standards.md         # architecture, style, config, security
 │   ├── example-task.md         # Task Tracking rules and scenarios
+│   ├── design-assessment.md    # ownership, assessment, justified refactoring
 │   ├── api-errors.md           # contracts, envelope, errors, i18n, health
 │   ├── testing.md              # TDD, fixtures, mocks, architecture checks
 │   ├── persistence-events.md   # storage, SQL, migrations, events

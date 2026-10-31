@@ -47,26 +47,14 @@ classification, package location, and ownership relationship.
 
 ## Structs & constructors
 
-- Use defined structs (no anonymous structs); public fields.
+- Use defined structs (no anonymous structs). Keep invariant-bearing domain state private; expose public fields for data transfer and dependency wiring as detailed in [go-standards.md](go-standards.md#structs-and-constructors).
 - Add a constructor `NewX` **only** when it performs business validation and returns an error.
 - **No** constructors in repositories or infrastructure — use plain structs.
 - A struct, its methods, and its constructor live in the **same file**.
 
-Example value object with validation (domain layer):
-
-```go
-type NanoID string
-
-func ParseNanoID(id string) (NanoID, error) {
-    if id == "" {
-        return NanoID(""), nil
-    }
-    if len(id) != NanoIDLength {
-        return "", errs.ErrInvalidNanoIDLength
-    }
-    return NanoID(id), nil
-}
-```
+The worked domain example is [Task Tracking](example-task.md#tactical-design):
+`Title` is a value object with a private representation and validated construction.
+Its validity must also be enforced when accepting Go zero values into Task.
 
 ## Testing
 

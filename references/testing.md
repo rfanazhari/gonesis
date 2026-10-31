@@ -14,6 +14,19 @@ Keep optional real-resource suites opt-in through an explicit command or the tar
 
 The user explicitly requires local health smoke for HTTP services and a verifiable example API flow. Those runtime checks remain necessary even though ordinary adapter unit tests are optional.
 
+## Assessment-selected work
+
+Use [design-assessment.md](design-assessment.md) to justify and scope changes before production edits:
+
+| Selected work | Test path |
+| --- | --- |
+| Missing product behavior or bug fix | Write a public-behavior regression test, demonstrate the intended RED, implement and reach GREEN. Resolve changed product decisions first. |
+| New internal contract preserving product behavior, such as a validated domain value | Demonstrate RED through its public interface, implement to GREEN, and retain product-level regression coverage. |
+| Restructuring behind an existing contract | Verify a GREEN baseline; add characterization coverage first if insufficient. Refactor in small steps with affected tests GREEN before/after. No artificial RED is required. |
+| Assessment with no justified change | Record what was assessed and the retention rationale; no manufactured test diff is needed. |
+
+These paths do not waive the initial Task rules' RED/GREEN evidence or authorize commits. Git actions follow [git-documentation.md](git-documentation.md).
+
 ## Before editing any test
 
 1. Read the entire test file.
@@ -50,6 +63,8 @@ When adding/updating cases, rewrite the entire table block, preserving all exist
 Use controllable time in tests rather than sleeps or arbitrary wall-clock assumptions. Create a task with a valid future due date, then advance time beyond it to test overdue behavior.
 
 Test accepted and rejected transitions, timestamp ownership, immutable Done behavior, not found, dependency errors, and `TaskCompleted` under the chosen dispatch contract. Rejected transitions must not publish a successful-completion event.
+
+For the [Task design baseline](example-task.md#additional-design-regression-evidence), test Title validity/equality and zero-value rejection at aggregate boundaries, private-state operations, due-date copy isolation and separate creation/restoration. Assert the event returned by successful domain completion independently of application save/publish orchestration. Verify that the application clock supplies the trusted time used by domain checks and recorded facts, without sleeps or domain wall-clock reads.
 
 Persistence/dispatch semantics, time boundaries, and API field formats must be settled before tests encode a purported product decision. Keep unresolved choices explicit.
 

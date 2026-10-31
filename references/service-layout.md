@@ -48,7 +48,8 @@ Paths below describe allowed locations. Create subdirectories/files when the exa
 │   │   └── testdata.go
 │   └── infrastructure/               # conditional integration checks
 ├── docs/
-│   └── api/                          # contract, endpoint docs, changelog
+│   ├── api/                          # contract, endpoint docs, changelog
+│   └── design/<feature>.md            # default: one owning feature design doc
 ├── Makefile
 ├── .golangci.yml
 ├── .mockery.yml                      # conditional: mocks used by tests
@@ -59,6 +60,8 @@ Paths below describe allowed locations. Create subdirectories/files when the exa
 ```
 
 The reference feature gives each of the four layers real responsibilities. Other unused subdirectories may remain absent. Git does not track empty directories; a short README can explain an otherwise empty structural directory when it is needed.
+
+Use the concrete [Task feature package baseline](example-task.md#baseline-feature-packages) for this example: one struct per application operation grouped by feature, plus the detail query. Other features derive their own model and package needs from requirements and design assessment. Design-document locations follow [git-documentation.md](git-documentation.md#feature-design-documentation), reusing target conventions when present.
 
 **Conditional:** gRPC/proto, CLI, web assets, or other package locations are added only for requested components. Packaging and deployment are outside the initial workflow.
 

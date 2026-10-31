@@ -9,6 +9,7 @@ Use this checklist when the service implementation is authorized. Consolidating 
 | Scope/identity | Diff implements the foundation and one agreed example; module/import/config identity is consistent. |
 | Layout | Four root layers follow the consolidated layout; enabled packages have real responsibilities. |
 | Architecture | Repeatable dependency checks pass; domain tests prove business-rule ownership. |
+| Design assessment | The owning feature document contains tactical/technical design and ticket-linked findings/dispositions under [design-assessment.md](design-assessment.md); selected changes are verified and no deferred finding blocks acceptance. |
 | Business behavior | All nine Task rules and acceptance scenarios pass with RED/GREEN evidence. |
 | Configuration | Enabled environment settings have required/default/format documentation; invalid config is rejected and secrets stay out of source/logs. |
 | Lifecycle | Startup failure cleans up opened resources; cancellation/shutdown completes within its bound. |

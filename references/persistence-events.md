@@ -10,9 +10,11 @@ If the selected medium is in-memory, do not claim data survives process restart.
 
 ## SQL implementation rules
 
-- **Required when SQL is used:** raw SQL is the default. The source policy targets at least 70% raw SQL repository implementations; GORM is an exception, not a reason to add artificial repositories to satisfy a ratio.
-- GORM is the allowed ORM. It may be used for queries joining at most two tables; queries joining more than two require raw SQL. Use raw SQL for complex subqueries, unions, calculations, and similar cases.
-- Keep persistence models in infrastructure. Do not add `json` tags to those models or use them directly as API DTOs.
+- **Default when SQL is selected:** use GORM for CRUD and simple queries. Explicit user and target project instructions take precedence; this default does not select SQL as the storage medium.
+- Use raw SQL when it improves clarity, supports complex query requirements (such as reporting, subqueries, unions, or calculations), or addresses a measured performance need. Choose by query requirements and evidence, without a raw SQL percentage target or a fixed table-count limit. Raw SQL may use GORM's `Raw`/`Exec` within the same transaction where appropriate.
+- Record the adapter choice, material raw SQL exceptions and reasons, model mapping, and transaction boundaries in the technical design. Carry those decisions into implementation tasks and verification.
+- Keep persistence models and GORM dependencies in infrastructure, separate from domain models. Do not add `json` tags to persistence models or use them directly as API DTOs. Keep business rules in their assessed owners rather than moving them into ORM hooks.
+- Verify relevant GORM behavior against the selected version: explicitly select update fields when persisting zero values (`false`, `0`, empty strings), inspect association queries for N+1 risk, and define soft-deletion behavior when used. Plan database integration checks where mocks cannot establish correctness or performance.
 - Pass `context.Context` into every operation. Use context-aware query/exec APIs and GORM `WithContext` as appropriate.
 - Parameterize query values, such as PostgreSQL `$1`, `$2`; never concatenate or format user-controlled values into SQL.
 - Check query, scan, commit, rollback where relevant, and iteration errors such as `rows.Err()`; close owned resources.
@@ -38,6 +40,8 @@ Schema fields and repository statements must agree. Example identifiers such as 
 ## Migration artifacts
 
 **Required when SQL schema changes:** use golang-migrate and provide both up/down files under `migrations/pgsql/` for PostgreSQL.
+
+Keep schema changes reviewable through explicit migration files rather than runtime GORM `AutoMigrate`.
 
 From the service root, the creation command has this form:
 

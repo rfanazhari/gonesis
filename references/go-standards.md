@@ -25,7 +25,9 @@ These are the consolidated implementation rules for the workflow. Use the agreed
 
 ## Structs and constructors
 
-- **Required:** use named struct types with public fields; avoid anonymous structs.
+- **Required:** use named struct types; avoid anonymous structs. Keep aggregate/entity invariant-bearing state and value-object representation private. Expose domain operations and read accessors; return copies of mutable values so callers cannot bypass those operations.
+- Public fields are appropriate for DTOs, configuration, persistence/restoration snapshots and dependency wiring on application/infrastructure structs. Validate snapshots at domain restoration boundaries; their public fields do not expose live aggregate state.
+- Account for Go zero values at public domain boundaries. A private representation or validating constructor alone does not make every instance valid; reject invalid values before accepting them into an aggregate or executing business operations.
 - A service-owned `NewX` constructor is appropriate only when it performs business validation and returns an error. Apply validating construction to domain objects and use-case input/command objects where needed.
 - **Required:** use plain structs for repositories and infrastructure; do not add constructors there.
 - Calls to dependency-provided constructors follow the verified dependency API. This does not authorize adding service-owned wiring constructors that bypass the rule above.

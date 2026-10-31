@@ -13,6 +13,7 @@ Reference consolidation date: 2026-10-27. Recorded dependency source inspections
 | Architecture, Go style, configuration, security, and performance | `go-standards.md`. |
 | Module identity, four root layers, and composition | `service-layout.md`. |
 | Business behavior and acceptance scenarios | `example-task.md`. |
+| Design confirmation, assessment and refinement authority | `design-assessment.md`. |
 | API contracts, response envelope, safe errors, and localization | `api-errors.md`. |
 | TDD, fixtures, generated mocks, and architecture checks | `testing.md`. |
 | SQL/migrations and internal event requirements | `persistence-events.md`. |
