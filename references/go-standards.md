@@ -51,8 +51,7 @@ These are the consolidated implementation rules for the workflow. Use the agreed
 - Include only enabled integrations in `.env.example`; remove unrelated sample hosts, Redis settings, or certificate names.
 - Use the service identity consistently in module configuration, logs, and runtime documentation.
 - Initialize required logging early enough to report startup failures without substituting standard-library logging.
-- Propagate cancellation/deadlines into I/O. Close already-opened resources on startup failure and close owned resources during shutdown.
-- Give startup, request, and shutdown verification finite time limits.
+- Apply [runtime-lifecycle.md](runtime-lifecycle.md) for component selection, resource ownership, startup cancellation, supervision, and one total shutdown budget. Verify actual cancellation/close APIs and give startup, request, and shutdown verification finite time limits.
 
 ## Performance and concurrency
 

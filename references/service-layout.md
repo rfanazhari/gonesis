@@ -29,11 +29,13 @@ Paths below describe allowed locations. Create subdirectories/files when the exa
 │   ├── dto/
 │   └── event/                         # application event handlers
 ├── delivery/
-│   └── http/                         # conditional: HTTP runtime
-│       ├── handler/<domain>handler/
-│       └── middleware/
+│   ├── http/                         # conditional: HTTP runtime
+│   │   ├── handler/<domain>handler/
+│   │   └── middleware/
+│   └── rpc/                          # conditional: inbound RPC handlers
 ├── infrastructure/
 │   ├── database/                     # conditional: database setup
+│   ├── runtime/                      # composition, supervision, lifecycle
 │   ├── repository/<x>repository/
 │   │   └── model/                    # persistence models, when needed
 │   └── service/                      # external clients/adapters
@@ -83,13 +85,26 @@ If it is absent or incompatible, provide the minimum service-local implementatio
 
 ## Composition root
 
-`cmd/app/main.go` is the entry point and composition root. It wires validated environment configuration, logging, localization, enabled resources, concrete adapters, application behavior, and the API/runtime.
+`cmd/app/main.go` is the process entry point. Keep signal handling, configuration/logging initialization, runtime invocation, and terminal error reporting thin. Put reusable composition and lifecycle coordination in `infrastructure/runtime/`, preserving applicable target conventions. Apply [runtime-lifecycle.md](runtime-lifecycle.md) before designing its dependency graph and lifecycle.
 
 Keep business invariants inside domain behavior and application orchestration inside application packages. Wiring can use plain structs with public dependencies; it does not require infrastructure constructors.
 
-Track ownership of every listener, connection pool, worker, or consumer. Startup errors clean up already-opened resources; cancellation and bounded shutdown stop active work and close owned resources.
+Separate resource setup, feature wiring, and transport setup from the coordinator as their responsibilities grow. For example:
 
-**Recommended:** expose a suitable reusable bootstrap path for runtime verification so a smoke harness starts the same service composition rather than a test-only handler graph.
+```text
+infrastructure/runtime/
+├── runtime.go       # startup order, supervision, shutdown coordination
+├── resources.go     # shared resources and ownership
+├── task.go          # Task adapters and application operation wiring
+├── http.go          # conditional: HTTP server lifecycle
+└── rpc.go           # conditional: RPC server lifecycle
+```
+
+These filenames illustrate responsibility boundaries, not a required file count. Colocate small cohesive wiring; split when it makes ownership and dependency assembly easier to follow. Create only enabled protocol files and use ordinary functions/plain structs before introducing shared lifecycle abstractions.
+
+Outbound RPC clients live in infrastructure adapters, such as `infrastructure/service/`; their connection setup belongs to resource composition. Inbound RPC handlers live in delivery. HTTP and RPC entry points reuse feature assembly rather than each constructing a different application graph.
+
+**Required:** expose the actual composition path for runtime verification. Smoke and business-flow harnesses use that path with explicit supported adapter/configuration selections; separate handler graphs do not establish composition correctness.
 
 ## Structural completion criteria
 

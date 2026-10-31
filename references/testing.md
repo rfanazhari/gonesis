@@ -12,7 +12,7 @@ Test public behavior; do not test private functions directly. Domain tests prove
 
 Keep optional real-resource suites opt-in through an explicit command or the target's supported test-tag convention so ordinary package checking does not unintentionally require Docker or remote resources.
 
-The user explicitly requires local health smoke for HTTP services and a verifiable example API flow. Those runtime checks remain necessary even though ordinary adapter unit tests are optional.
+The user explicitly requires local health smoke for HTTP services and a verifiable example API flow. Apply the required [composition and lifecycle scenarios](verification.md#runtime-composition-and-lifecycle-evidence) for enabled components, including non-HTTP runtimes. These checks remain necessary even though ordinary adapter unit tests are optional. Use the executable's composition path with supported configuration/adapters; keep test fixtures or failure injection behind narrow seams rather than rebuilding its feature graph. Construct plain runtime configuration and wiring structs directly when appropriate; the business-object factory rule below does not require infrastructure constructors.
 
 ## Assessment-selected work
 

@@ -22,6 +22,7 @@ Start with [SKILL.md](../SKILL.md); use [workflow.md](workflow.md) for detailed 
 | [requirement.example.txt](requirement.example.txt) | When a completed submission example is useful | Filled example; its choices are not workflow defaults. |
 | [go-standards.md](go-standards.md) | Before designing or editing Go packages | Architecture, Go style, configuration, security, performance. |
 | [service-layout.md](service-layout.md) | Before creating directories or wiring | Complete scoped layout, package responsibilities, standalone/workspace handling. |
+| [runtime-lifecycle.md](runtime-lifecycle.md) | Before runtime design or resource/feature/transport wiring | Component selection, inbound/outbound RPC, ownership, startup/fallback, supervision, and total shutdown budget. |
 | [api-errors.md](api-errors.md) | Before writing transport contracts or handlers | Contract-first workflow, JSON envelope, HTTP errors, localization, health. |
 | [testing.md](testing.md) | Before writing/editing tests or configuring tools | TDD, table-driven tests, factories, Mockery, coverage, architecture checks. |
 | [example-task.md](example-task.md) | When planning or implementing the required example | Nine rules, acceptance scenarios, ticket traceability, tactical/technical design and exclusions. |
@@ -57,7 +58,7 @@ The user provides the five decision areas through `requirement.txt`; use the ann
 | --- | --- |
 | Service name, purpose, destination, new/existing status | Workspace and package creation. |
 | Module path and compatible Go toolchain | Dependency setup and package creation. |
-| Process type: HTTP, worker, or combined | Runtime wiring and API verification planning. |
+| Enabled entry points: HTTP, RPC, worker, or combined; outbound clients selected separately | Runtime wiring and API verification planning. |
 | Accepted example scope and any requested variation | Domain/API design; Task Tracking is the current reference. |
 | Persistence choice and its runtime behavior | Repository adapter and any schema work. |
 | Internal event dispatch and failure semantics | Completion persistence/publication orchestration. |

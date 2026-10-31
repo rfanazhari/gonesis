@@ -128,9 +128,9 @@ Resolve these mechanics from the validated requirements and the live target befo
 | --- | --- |
 | Domain | Own Task, value validity, lifecycle/finality, overdue and domain meaning of timestamps/events. No HTTP, database or broker I/O. |
 | Application | Implement the five use cases; coordinate domain operations, repository access, trusted time and publication through required ports. Preserve domain errors without reimplementing their predicates. |
-| Delivery | Parse transport input into explicit command/query inputs, invoke application behavior and map results/errors into explicit response DTOs and the standard envelope. |
+| Delivery | Parse transport input into explicit command/query inputs, invoke application behavior and map results/errors into explicit response DTOs and the selected transport contract (the standard envelope for HTTP JSON). |
 | Infrastructure | Implement actual storage/time/dispatch adapters and map persistence representations to domain state. Keep generated test mocks separate from runtime adapters. |
-| Composition root | Wire configuration, logging/localization, resources, adapters, use cases and delivery; own startup failure cleanup and bounded shutdown. |
+| Composition root | Assemble the feature once for enabled delivery/worker entry points; resource ownership, startup/fallback, supervision, and shutdown follow [runtime-lifecycle.md](runtime-lifecycle.md). |
 
 Apply the four root layers under [service-layout.md](service-layout.md). Put port interfaces at the inner consumer/owner, with implementations outside; domain has no outward dependency. Verify exact library versions/APIs under [libraries.md](libraries.md) before adapter integration. Do not introduce pass-through services or interfaces without a caller need.
 

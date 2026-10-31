@@ -18,19 +18,19 @@ Use [requirement.txt](requirement.txt) as the annotated template. Its comment li
 
 | Area | Required meaning | Conditional detail |
 | --- | --- | --- |
-| Service | Name, purpose, destination/status, module path, and runtime. | Toolchain constraints, integration restrictions, ticket, and requested Git actions. |
+| Service | Name, purpose, destination/status, module path, and runtime. | Enabled inbound servers/workers versus outbound clients, independent component/fallback choices, toolchain constraints, integration restrictions, ticket, and requested Git actions. |
 | Persistence | Storage medium, retention/restart behavior, consistency, and failure expectations. | Driver, schema/migrations, and available database resources when a database is selected. |
 | Internal events | Dispatch mechanism, publication point, event fields, save/publication failure behavior, and durability. | Retry, delivery, capacity, and lifecycle behavior needed by the chosen mechanism. |
 | Time | Timezone/representation/precision, due-date boundaries, optional/cleared dates, and system timestamp ownership. | Ambiguous date-only versus instant behavior or API precision conversions. |
 | API | Transport, operations/routes, identifiers/states, payload expectations, validation boundaries, success/error statuses, and health. | Existing consumer contracts or restrictions that the generated contract must preserve. |
-| Verification | Business/API evidence, HTTP smoke/lifecycle expectations, architecture constraints, local resources, and limits. | Existing tool commands can be supplied but are not required user knowledge. |
+| Verification | Business/API evidence, runtime smoke/lifecycle expectations, architecture constraints, local resources, and limits. | HTTP health when enabled; probes for other enabled entry points. Existing tool commands can be supplied but are not required user knowledge. |
 
 The agent supplies the implementation plan, formal API documentation, test-package paths, compatible dependency choices, smoke harness, and repeatable architecture-check commands. Ask the user about observable requirements rather than requiring them to design these mechanics.
 
 ## Validation before dependent implementation
 
 1. Check that identity and all five sections are present and have meaningful selections. A blank, `<answer>`, or `unresolved` is a pending decision, not a default.
-2. Compare selections with the Task rules and workflow constraints. Preserve four root layers, the example feature, TDD, standard errors/translations, and required HTTP smoke unless the user explicitly changes scope.
+2. Compare selections with the Task rules and workflow constraints. Preserve four root layers, the example feature, TDD, standard errors/translations, required runtime lifecycle evidence, and HTTP smoke when HTTP is enabled unless the user explicitly changes scope.
 3. Check cross-section consistency: storage retention versus durability promises; dispatch versus broker availability; save/event atomicity versus the selected runtime adapter; time precision versus comparisons and JSON; API states/errors versus business rules; verification expectations versus available resources.
 4. Distinguish business decisions from discoverable repository facts and implementation choices. Discover the latter before requesting missing information.
 5. Summarize accepted selections and ask focused questions only for missing/conflicting decisions that block the next work. Continue independent work where possible.
@@ -39,6 +39,8 @@ The agent supplies the implementation plan, formal API documentation, test-packa
 Examples of blockers include requesting durable events with only volatile storage and no recovery mechanism, requiring a broker while forbidding every available broker resource, and selecting time boundaries that conflict with BR-03/BR-07. A proposed local resource in a sample is not evidence that it is available in the actual environment.
 
 An incomplete file is not grounds to discard the request or silently choose alternatives. Report exactly which decision is missing and its implementation consequence.
+
+When optional runtime components are requested, resolve their disabled/required/fallback behavior and dependent capabilities under [runtime-lifecycle.md](runtime-lifecycle.md#component-selection-and-fallback). Record these details in the existing Runtime/Optional constraints and relevant dependency sections; an outbound RPC client does not imply an RPC server. The template's `HTTP smoke and lifecycle expectations` field also accepts smoke/lifecycle requirements for non-HTTP runtimes. Equivalent prose remains valid; no additional mandatory section or protocol is introduced.
 
 ## Evidence and maintenance
 

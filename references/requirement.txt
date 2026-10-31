@@ -18,8 +18,10 @@ Module path: <answer>
 # Example: example.com/taskdemo
 Runtime: <answer>
 # Example: HTTP API; no authentication or per-user ownership.
+# State enabled inbound servers/workers separately from outbound clients, such as an optional RPC client; enable only needed components.
 Optional constraints and requested Git actions: <answer>
 # Example: Follow the target's Go toolchain; no commit or MR requested; no extra integrations.
+# If components are optional, state their disabled/required/fallback behavior and dependent capabilities; fallback is not implicit.
 
 [1. Persistence]
 Storage and driver, if applicable: <answer>
@@ -72,6 +74,7 @@ Required business/API checks: <answer>
 # Example: TDD for BR-01-BR-09; demonstrate create-start-complete-view, reschedule, overdue, and rejected transitions through the API.
 HTTP smoke and lifecycle expectations: <answer>
 # Example: Start actual wiring through go test, call /health over a local listener, validate the envelope, then verify shutdown.
+# For every runtime: specify startup/cancellation, applicable failure/fallback scenarios, active-work drain/cancel, and one total shutdown budget. Use protocol-appropriate probes when HTTP is disabled.
 Architecture constraints: <answer>
 # Example: Four root layers; domain independent of HTTP/database/broker; repeatable dependency checks plus domain behavior tests.
 Available local resources and execution limits: <answer>

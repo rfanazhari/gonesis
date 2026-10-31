@@ -2,13 +2,15 @@
 
 ## Contract before handler
 
-**Required:** design each endpoint contract before its handler. Record method/path, request fields, response DTOs, statuses, validation, headers, error cases, and compatibility effects.
+**Required:** design each endpoint contract before its handler. For HTTP, record method/path, request fields, response DTOs, statuses, validation, headers, error cases, and compatibility effects. For enabled RPC servers, record service/method, message schemas, metadata, status/error mapping, cancellation/deadlines, and compatibility in the selected protocol's contract format.
 
 Use the target's established contract location when available; the default service-local location is `docs/api/`. Include the specification, relevant endpoint documentation, and an API changelog entry for every contract change. A breaking change to an already-published endpoint requires a new version.
 
 The Task example's concrete routes, identifier type, payload fields, and time format are unresolved inputs. Define them before writing handlers; the capability list alone is not a complete API contract.
 
-## Required JSON envelope
+For outbound RPC clients, verify the upstream contract and map transport failures into application errors at the infrastructure boundary. The client is a dependency, not an additional server. For RPC delivery, map application errors into the agreed protocol status/details and define locale metadata when needed; the HTTP envelope and `Accept-Language` convention below apply to HTTP JSON responses. RPC handlers use the same application operations and preserve the same business rules. See [runtime-lifecycle.md](runtime-lifecycle.md#inbound-rpc-and-outbound-rpc) for wiring and lifecycle.
+
+## Required HTTP JSON envelope
 
 ```json
 {
@@ -63,7 +65,7 @@ An error representation must carry a stable code/category and support preserving
 
 ## Request validation, auth, and headers
 
-Use named request/response DTOs and the agreed `json`/validation tags. Structural request validation complements domain invariants; it does not replace domain tests or lifecycle checks.
+Use named request/response DTOs and the selected transport's schema/validation conventions (`json`/validation tags for HTTP JSON). Structural request validation complements domain invariants; it does not replace domain tests or lifecycle checks.
 
 The Task example has a single general user role and no authentication or per-user ownership feature. Do not attach production auth/tenant requirements to this reference example implicitly.
 

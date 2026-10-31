@@ -16,7 +16,8 @@ When the skill runs to completion, the generated service has:
 - **Contracts before handlers**: API documentation under `docs/api/`, plus business-rule documentation.
 - **Design assessment**: one owning feature document with tactical/technical design, ticket references, review after GREEN, and justified refactoring with regression evidence.
 - **Tooling**: all-package `go test`, lint, vulnerability check, repeatable architecture (dependency-direction) checks, and Mockery-generated mocks where tests need them.
-- **Runtime proof**: a local `/health` smoke test through the real composition root, bounded shutdown, and a demonstrated create → start → complete → view API flow.
+- **Runtime composition**: resource setup, feature wiring, and enabled HTTP/RPC/worker entry points have separate responsibilities; outbound RPC clients are optional dependencies selected independently of servers.
+- **Runtime proof**: lifecycle checks and create → start → complete → view through the actual composition, including one total shutdown budget; HTTP services also verify local `/health` smoke.
 
 Out of scope for the initial workflow: packaging and image publication, provisioning, deployment, and additional business features. Commits and merge requests happen only if you ask for them.
 
@@ -115,6 +116,7 @@ gonesis/
 │   ├── requirement.txt         # annotated input template
 │   ├── requirement.example.txt # filled example (not a default)
 │   ├── service-layout.md       # directory tree and composition root
+│   ├── runtime-lifecycle.md    # modes, ownership, startup, supervision, shutdown
 │   ├── go-standards.md         # architecture, style, config, security
 │   ├── example-task.md         # Task Tracking rules and scenarios
 │   ├── design-assessment.md    # ownership, assessment, justified refactoring

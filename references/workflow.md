@@ -13,6 +13,7 @@ Dependency: the user request and read access to the target.
 - **Required:** inspect target instructions, existing code/configuration, Git state, module files, and available tools. Use this reference set for consolidated workflow rules.
 - **Required:** read the user's `requirement.txt` and validate identity plus all five decision areas using [requirements.md](requirements.md). Illustrative template/sample answers are not selected requirements.
 - **Required:** identify every component as enabled, unnecessary, or unresolved; distinguish discovered facts from assumptions.
+- **Required:** distinguish inbound entry points from outbound clients and establish independent component/fallback choices under [runtime-lifecycle.md](runtime-lifecycle.md#component-selection-and-fallback). Include only selected protocols and dependencies.
 - **Required:** map the nine Task rules and acceptance scenarios to domain/application tests and API evidence. Settle storage, time, event, and API choices before dependent code.
 - **Conditional:** obtain upstream contracts or target-specific business rules for an explicitly requested additional integration.
 - **Required:** record conflicts, the governing decision, acceptance criteria, and verification commands.
@@ -59,7 +60,7 @@ Dependency: stage 3 and verified APIs for selected dependencies.
 - **Required:** confirm domain concepts, invariant/lifecycle ownership, consistency boundaries and preserved contracts using [design-assessment.md](design-assessment.md#before-implementation-confirm-the-design) and the example's design guidance before dependent tests/code.
 - **Conditional HTTP:** establish GET `/health`, its standard envelope, lack of auth, and its limited readiness meaning.
 - **Conditional:** define database connections, migrations, outbound clients, or broker configuration only for enabled requirements.
-- **Required:** define startup cancellation, partial-startup cleanup, and shutdown for owned resources.
+- **Required:** define resource ownership/readiness, component failure policy, startup cancellation/cleanup, and one total shutdown budget under [runtime-lifecycle.md](runtime-lifecycle.md). Identify actual stop/close APIs and any bootstrap required by authorized features before wiring.
 
 Output: contracts, foundation configuration, error catalog/localization, adapter decisions, lifecycle plan, and an owning feature design document with tactical/technical sections and ticket/rule references.
 
@@ -71,12 +72,12 @@ Dependency: stage 4 contracts and the stage 1 test plan. Apply [example-task.md]
 
 - **Required:** implement one public scenario at a time: demonstrate RED for missing behavior, add the minimum implementation, reach GREEN, then refactor.
 - **Required:** enforce title/date validity, lifecycle transitions, Done finality, overdue behavior, and system timestamps in the domain responsibilities. Application code orchestrates persistence and completion-event publication.
-- **Required:** connect config → logging/i18n → resources → adapters → application → API/runtime in the composition root.
+- **Required:** connect config → logging/i18n → resources → adapters → application → enabled entry points through the reusable composition. Separate resource setup, feature assembly, transport setup, and lifecycle coordination under [service-layout.md](service-layout.md#composition-root).
 - **Required:** verify successful behavior, rejected rules, missing records, adapter failure, and the completion event through public interfaces.
 - **Required:** assess actual code/callers after GREEN under [design-assessment.md](design-assessment.md); justify findings, execute selected changes through [testing.md](testing.md#assessment-selected-work), and reassess the final feature diff.
-- **Required:** log startup failures, close resources already opened, and implement bounded shutdown.
+- **Required:** implement startup cleanup, safe agreed fallback, server/worker supervision, and bounded shutdown under [runtime-lifecycle.md](runtime-lifecycle.md). Propagate terminal and cleanup failures to the entry point.
 - **Conditional HTTP:** register health without auth; add only applicable middleware/CORS; adapt framework-generated responses to the agreed envelope.
-- **Recommended:** keep `main` thin and make the real composition root reusable by a smoke harness.
+- **Required:** keep the process entry point thin and reuse the actual composition for runtime checks; protocol-specific handlers share the assembled feature dependencies.
 
 Output: working reference feature, domain/application unit tests, RED/GREEN evidence, real adapters, runtime wiring, and cleanup.
 
@@ -103,7 +104,7 @@ Complete when commands fit the actual structure and verification has no publicat
 Dependency: stages 1–6 and the local prerequisites for the required checks.
 
 - **Required:** run [verification.md](verification.md), compare results with all reference rules/scenarios, and review the diff against scope.
-- **Required:** demonstrate the example API flow; an HTTP service must also pass local health smoke and shutdown verification.
+- **Required:** demonstrate the example API flow and applicable [runtime composition/lifecycle scenarios](verification.md#runtime-composition-and-lifecycle-evidence) through the actual composition; an HTTP service must also pass local health smoke. Verify enabled RPC/worker entry points with their own probes.
 - **Required:** fix in-scope findings and rerun affected checks. Report blockers with evidence and preserve partial work.
 - **Conditional:** commit or create an MR only within the user's requested scope.
 

@@ -49,6 +49,7 @@ Use [workflow.md](references/workflow.md) for stage dependencies, outputs, and c
 | Before this activity | Read and apply |
 | --- | --- |
 | Creating modules/packages or changing Go implementation | [backend-service-standard.md](references/backend-service-standard.md), [service-layout.md](references/service-layout.md), [go-standards.md](references/go-standards.md) |
+| Designing or implementing composition, component modes, HTTP/RPC/worker startup, outbound client ownership, or shutdown | [runtime-lifecycle.md](references/runtime-lifecycle.md) |
 | Designing/implementing the mandatory business example | [example-task.md](references/example-task.md) |
 | Confirming implementation design, assessing after GREEN, or selecting refactors | [design-assessment.md](references/design-assessment.md) |
 | Selecting dependencies, configuring logging, or integrating library APIs | [libraries.md](references/libraries.md) |
@@ -76,7 +77,7 @@ When using an available skeleton/shared helper, verify its real API and behavior
 
 Run [verification.md](references/verification.md) against the generated service and the validated input. Use `go test` for code verification, together with the service's lint/security commands and repeatable architecture checks. Demonstrate the real example API flow.
 
-For HTTP services, local `/health` smoke and bounded shutdown must pass. Verify the standard JSON envelope rather than assuming framework defaults comply. A smoke harness started through `go test` is a proposed implementation path; supply the concrete harness and command instead of claiming one already exists.
+Verify the actual composition and applicable lifecycle scenarios under [verification.md](references/verification.md#runtime-composition-and-lifecycle-evidence). For HTTP services, local `/health` smoke must also pass with the standard JSON envelope. Use the same composition path for business API evidence. A smoke harness started through `go test` is a proposed implementation path; supply the concrete harness and command instead of claiming one already exists.
 
 If a required check cannot run, record its command, working directory, observed failure, and missing prerequisite. Keep the affected result unfinished. Follow the test rule that two failures without a clear cause stop speculative edits; continue only independent work while the blocker is resolved.
 

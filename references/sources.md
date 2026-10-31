@@ -12,6 +12,7 @@ Reference consolidation date: 2026-10-27. Recorded dependency source inspections
 | Stage order, dependencies, and completion gates | `workflow.md`. |
 | Architecture, Go style, configuration, security, and performance | `go-standards.md`. |
 | Module identity, four root layers, and composition | `service-layout.md`. |
+| Runtime component selection, resource/feature/transport responsibilities, startup/fallback, supervision, and shutdown | `runtime-lifecycle.md`. |
 | Business behavior and acceptance scenarios | `example-task.md`. |
 | Design confirmation, assessment and refinement authority | `design-assessment.md`. |
 | API contracts, response envelope, safe errors, and localization | `api-errors.md`. |
